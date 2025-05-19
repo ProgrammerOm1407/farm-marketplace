@@ -1,20 +1,35 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type React from "react"
+import "./globals.css"
+import { Inter } from "next/font/google"
+import { ToastProvider } from "@/components/ui/toast-simple"
+import { RealTimeProvider } from "@/components/providers/real-time-simple"
+import { SiteHeader } from "@/components/layout/site-header-simple"
 
-export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.dev',
+const inter = Inter({ subsets: ["latin"] })
+
+export const metadata = {
+  title: "Farm Fresh Market",
+  description: "Connect directly with farmers to purchase high-quality grains",
+    generator: 'v0.dev'
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={inter.className}>
+        <ToastProvider>
+          <RealTimeProvider>
+            <div className="relative flex min-h-screen flex-col">
+              <SiteHeader />
+              <div className="flex-1">{children}</div>
+            </div>
+          </RealTimeProvider>
+        </ToastProvider>
+      </body>
     </html>
   )
 }
